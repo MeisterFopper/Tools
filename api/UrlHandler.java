@@ -10,6 +10,9 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**
+ * A utility class for http connection.
+ */
 public class UrlHandler {
 
     private static final String CONTENT_TYPE = "Content-Type";
