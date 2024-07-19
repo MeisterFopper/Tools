@@ -2,14 +2,14 @@ package api;
 
 import org.json.simple.JSONObject;
 
-public class RestfulApiObject {
+public class RestfulObject {
     private String id;
     private String name;
     private String createdAt;
     private String message;
     private JSONObject data;
 
-    public RestfulApiObject() {
+    public RestfulObject() {
         reset();
     }
 

@@ -8,7 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-public class RestfulApiRun {
+public class RestfulRun {
 
     @SuppressWarnings("unchecked")
     private static JSONObject testPostJson() {
@@ -25,7 +25,7 @@ public class RestfulApiRun {
         return postJson;
     }
 
-    private static void printObject(RestfulApiObject object) {
+    private static void printObject(RestfulObject object) {
         if (object != null) {
             if (object.getMessage() != null) {
                 System.out.println(object.getMessage());
@@ -40,7 +40,7 @@ public class RestfulApiRun {
         try {
             JSONObject json = testPostJson();
             JSONObject resultJson = RestfulApi.addObject(json);
-            RestfulApiObject apiObject = new RestfulApiObject();
+            RestfulObject apiObject = new RestfulObject();
             apiObject.fromJson(resultJson);
             printObject(apiObject);
         } catch (IOException | ParseException e) {
@@ -69,7 +69,7 @@ public class RestfulApiRun {
     private static void handleGet(String id) {
         try {
             JSONObject resultJson = RestfulApi.singleObject(id);
-            RestfulApiObject apiObject = new RestfulApiObject();
+            RestfulObject apiObject = new RestfulObject();
             apiObject.fromJson(resultJson);
             printObject(apiObject);
         } catch (IOException | ParseException e) {
@@ -80,7 +80,7 @@ public class RestfulApiRun {
     private static void handleDelete(String id) {
         try {
             JSONObject resultJson = RestfulApi.deleteObject(id);
-            RestfulApiObject apiObject = new RestfulApiObject();
+            RestfulObject apiObject = new RestfulObject();
             apiObject.fromJson(resultJson);
             printObject(apiObject);
         } catch (IOException | ParseException e) {
