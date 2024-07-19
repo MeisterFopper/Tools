@@ -26,8 +26,8 @@ public class RestfulApi {
      * @throws ParseException If there's an error parsing the JSON response.
      */
     public static JSONArray allObjects() throws IOException, ParseException {
-        HttpURLConnection conn = UrlHandler.createConnection(URL_OBJECTS, "GET", null, null);
-        return JsonParserUtil.parseStringToArray(HttpResponseHandler.getResponse(conn));
+        HttpURLConnection conn = HttpHandler.createConnection(URL_OBJECTS, "GET", null, null);
+        return JsonParserUtil.parseStringToArray(HttpHandler.getResponse(conn));
     }
 
     /**
@@ -39,8 +39,8 @@ public class RestfulApi {
      * @throws ParseException If there's an error parsing the JSON response.
      */
     public static JSONArray listOfObjects(List<String> ids) throws IOException, ParseException {
-        HttpURLConnection conn = UrlHandler.createConnection(UrlHandler.addParametersToUrl(URL_OBJECTS, "id", ids), "GET", null, null);
-        return JsonParserUtil.parseStringToArray(HttpResponseHandler.getResponse(conn));
+        HttpURLConnection conn = HttpHandler.createConnection(HttpHandler.addParametersToUrl(URL_OBJECTS, "id", ids), "GET", null, null);
+        return JsonParserUtil.parseStringToArray(HttpHandler.getResponse(conn));
     }
 
     /**
@@ -52,8 +52,8 @@ public class RestfulApi {
      * @throws ParseException If there's an error parsing the JSON response.
      */
     public static JSONObject singleObject(String id) throws IOException, ParseException {
-        HttpURLConnection conn = UrlHandler.createConnection(URL_OBJECTS + "/" + id, "GET", null, null);
-        return JsonParserUtil.parseStringToObject(HttpResponseHandler.getResponse(conn));
+        HttpURLConnection conn = HttpHandler.createConnection(URL_OBJECTS + "/" + id, "GET", null, null);
+        return JsonParserUtil.parseStringToObject(HttpHandler.getResponse(conn));
     }
 
     /**
@@ -65,12 +65,26 @@ public class RestfulApi {
      * @throws ParseException If there's an error parsing the JSON response.
      */
     public static JSONObject addObject(JSONObject postObject) throws IOException, ParseException {
-    HttpURLConnection conn = UrlHandler.createConnection(URL_OBJECTS, "POST", null, postObject.toString());
+    HttpURLConnection conn = HttpHandler.createConnection(URL_OBJECTS, "POST", null, postObject.toString());
         try (OutputStream os = conn.getOutputStream()) {
             byte[] input = postObject.toString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
 
-        return JsonParserUtil.parseStringToObject(HttpResponseHandler.getResponse(conn));
+        return JsonParserUtil.parseStringToObject(HttpHandler.getResponse(conn));
     }
+
+    /**
+     * Deletes object to the API.
+     *
+     * @param String Object Id to delete
+     * @return JSONObject result.
+     * @throws IOException    If an I/O exception occurs.
+     * @throws ParseException If there's an error parsing the JSON response.
+     */
+    public static JSONObject deleteObject(String id) throws IOException, ParseException {
+        HttpURLConnection conn = HttpHandler.createConnection(URL_OBJECTS + "/" + id, "DELETE", null, null);
+        return JsonParserUtil.parseStringToObject(HttpHandler.getResponse(conn));
+        }
+    
 }
