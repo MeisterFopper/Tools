@@ -1,4 +1,4 @@
-package api.witze;
+package api;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

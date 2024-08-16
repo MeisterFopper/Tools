@@ -1,4 +1,4 @@
-package api.witze;
+package app;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.json.simple.parser.ParseException;
 
-public class App {
+import api.WitzeApi;
+
+public class WitzeApp {
 
     private static void printLanguages(WitzeApi witzeApi) throws IOException, ParseException, URISyntaxException {
         Map<String, String> languages = witzeApi.loadLanguages();

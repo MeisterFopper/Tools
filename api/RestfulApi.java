@@ -1,4 +1,4 @@
-package api.restful;
+package api;
 
 import java.io.IOException;
 import java.io.OutputStream;

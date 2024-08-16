@@ -1,4 +1,4 @@
-package api.restful;
+package api;
 
 import org.json.simple.JSONObject;
 

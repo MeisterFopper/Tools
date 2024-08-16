@@ -1,4 +1,4 @@
-package api.restful;
+package app;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,7 +9,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-public class App {
+import api.RestfulApi;
+import api.RestfulObject;
+
+public class RestfulApp {
 
     @SuppressWarnings("unchecked")
     private static RestfulObject createObject(String name, String generation, String price, String capacity) {
