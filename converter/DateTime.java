@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class DateTimeConverter {
+public class DateTime {
 
     /**
      * Converts milliseconds to seconds.
