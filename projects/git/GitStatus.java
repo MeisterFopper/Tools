@@ -1,4 +1,4 @@
-package util;
+package projects.git;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
