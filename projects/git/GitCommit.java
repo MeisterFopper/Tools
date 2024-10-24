@@ -6,6 +6,7 @@ import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.FileMode;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -18,13 +19,15 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class GitCommitHistory {
+public class GitCommit {
 
     private final Git git;
 
-    public GitCommitHistory(File repoDir) throws IOException {
+    public GitCommit(File repoDir) throws IOException {
         this.git = Git.open(repoDir);
     }
 
@@ -69,7 +72,7 @@ public class GitCommitHistory {
             Iterable<RevCommit> commits = git.log().setMaxCount(commitCount).call();
 
             for (RevCommit commit : commits) {
-                List<GitChangedFile> changedFiles = new ArrayList<>();
+                List<GitCommitFile> changedFiles = new ArrayList<>();
 
                 try (TreeWalk treeWalk = new TreeWalk(repository)) {
                     treeWalk.addTree(commit.getTree());
@@ -83,7 +86,7 @@ public class GitCommitHistory {
 
                         // Optional: Prüfe den Typ der Datei
                         if (mode.equals(FileMode.REGULAR_FILE)) {
-                            changedFiles.add(new GitChangedFile(objectId, pathString));
+                            changedFiles.add(new GitCommitFile(objectId, pathString));
                         }
                     }
                 }
@@ -100,4 +103,41 @@ public class GitCommitHistory {
         }
         return commitInfos;
     }
+
+    /**
+     * Checks if a given commit is already present on the remote server.
+     *
+     * @param git The Git object representing the repository.
+     * @param commitId The ID of the commit to check.
+     * @param branchName The name of the branch (e.g., "master").
+     * @return True if the commit is already pushed to the remote server, false otherwise.
+     * @throws IOException If an error occurs while accessing the repository.
+     */
+    public static boolean isCommitPushed(Git git, String branchName, String commitId) throws IOException {
+        // Get the local branch (e.g., "refs/heads/master")
+        Ref localBranch = git.getRepository().exactRef("refs/heads/" + branchName);
+        if (localBranch == null) {
+            throw new IOException("Local branch not found: " + branchName);
+        }
+
+        // Get the remote-tracking branch (e.g., "refs/remotes/origin/master")
+        Ref remoteBranch = git.getRepository().exactRef("refs/remotes/origin/" + branchName);
+        if (remoteBranch == null) {
+            throw new IOException("Remote branch not found: " + branchName);
+        }
+
+        // Get all commits reachable from the remote branch
+        Set<String> remoteCommitIds = new HashSet<>();
+        try (RevWalk revWalk = new RevWalk(git.getRepository())) {
+            RevCommit remoteCommit = revWalk.parseCommit(remoteBranch.getObjectId());
+            revWalk.markStart(remoteCommit);
+            for (RevCommit commit : revWalk) {
+                remoteCommitIds.add(commit.getName());
+            }
+        }
+
+        // Check if the given commit is in the set of remote commits
+        return remoteCommitIds.contains(commitId);
+    }
+
 }

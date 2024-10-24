@@ -7,9 +7,9 @@ public class GitCommitInfo {
     private final String message;
     private final String author;
     private final String date;
-    private final List<GitChangedFile> changedFiles;
+    private final List<GitCommitFile> changedFiles;
 
-    public GitCommitInfo(String commitId, String message, String author, String date, List<GitChangedFile> changedFiles) {
+    public GitCommitInfo(String commitId, String message, String author, String date, List<GitCommitFile> changedFiles) {
         this.commitId = commitId;
         this.message = message;
         this.author = author;
@@ -35,7 +35,7 @@ public class GitCommitInfo {
         return date;
     }
 
-    public List<GitChangedFile> getChangedFiles() {
+    public List<GitCommitFile> getChangedFiles() {
         return changedFiles;
     }
 

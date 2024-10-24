@@ -20,6 +20,17 @@ public class GitIgnore {
         this.gitIgnoreFile = gitIgnoreFile;
         this.patternToCommentsMap = new LinkedHashMap<>();
     }
+    
+    /**
+     * Checks if the .gitignore file exists.
+     *
+     * @throws IllegalArgumentException if the .gitignore file does not exist.
+     */
+    private void checkFileExists() {
+        if (!this.gitIgnoreFile.exists()) {
+            throw new IllegalArgumentException(".gitignore-Datei existiert nicht.");
+        }
+    }
 
     /**
      * Loads the .gitignore file into the internal data structure.
@@ -129,14 +140,4 @@ public class GitIgnore {
         }
     }
 
-    /**
-     * Checks if the .gitignore file exists.
-     *
-     * @throws IllegalArgumentException if the .gitignore file does not exist.
-     */
-    private void checkFileExists() {
-        if (!this.gitIgnoreFile.exists()) {
-            throw new IllegalArgumentException(".gitignore-Datei existiert nicht.");
-        }
-    }
 }

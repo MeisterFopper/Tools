@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class GitStatus {
 
-    // Constants for file states
+    // Constants for  pre-commit file states
     public static final String STATUS_ADDED = "Added";
     public static final String STATUS_CHANGED = "Changed";
     public static final String STATUS_REMOVED = "Removed";
@@ -23,7 +23,7 @@ public class GitStatus {
     public static final String STATUS_MODIFIED = "Modified";
     public static final String STATUS_CONFLICTING = "Conflicting";
 
-    // Constants for actions
+    // Constants for pre-commit actions
     public static final String ACTION_COMMIT = "Commit";
     public static final String ACTION_ADD = "Add";
     public static final String ACTION_UNSTAGE = "Unstage";
@@ -32,6 +32,12 @@ public class GitStatus {
     public static final String ACTION_RESTORE = "Restore";
     public static final String ACTION_RESOLVE = "Resolve Conflicts";
     public static final String ACTION_UNDO = "Undo Merge";
+
+    // Constants for post-commit actions
+    public static final String ACTION_PUSH = "Push";
+    public static final String ACTION_TAG = "Tag";
+    public static final String ACTION_REVERT = "Revert";
+    public static final String ACTION_CHERRY_PICK = "Cherry Pick";
 
     private final Git git;
     private final File repoDir;

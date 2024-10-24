@@ -2,11 +2,11 @@ package projects.git;
 
 import org.eclipse.jgit.lib.ObjectId;
 
-public class GitChangedFile {
+public class GitCommitFile {
     private final ObjectId objectId;
     private final String fileName;
 
-    public GitChangedFile(ObjectId objectId, String fileName) {
+    public GitCommitFile(ObjectId objectId, String fileName) {
         this.objectId = objectId;
         this.fileName = fileName;
     }
